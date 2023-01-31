@@ -1,30 +1,57 @@
-爱,ai
-八,ba
-爸爸,baba
-杯子,beizi
-北京,beijing
-本,ben
-不客气,bukeqi
-菜,cai
-茶,cha
-吃,chi
-出租车,chuzuche
-打电话,dadianhua
-大,da
-的,de
-点,dian
-电脑,diannao
-电视,dianshi
-电影,dianying
-东西,dongxi
-都,dou
-读,du
-对不起,duibuqi
-多,duo
-多少,duoshao
-儿子,erzi
-二,er
-饭店,fandian
-飞机,feiji
-分钟,fenzhong
-高兴,gaoxing
+爱,ai,love
+八,ba,eight
+爸爸,baba,father
+杯子,beizi,cup
+北京,beijing,beijing
+本,ben,nm for books
+不客气,bukeqi,you are welcome
+不,bu,no
+菜,cai,vegetables
+茶,cha,tea
+吃,chi,eat
+出租车,chuzuche,taxi
+打电话,dadianhua,make a phone call
+大,da,big
+的,de,of(atttributive marker)
+点,dian,o clock
+电脑,diannao,computer
+电视,dianshi,TV
+电影,dianying,movie
+东西,dongxi,thing
+都,dou,all
+读,du,read
+对不起,duibuqi,i am sorry
+多,duo,a lot or how
+多少,duoshao,how much
+儿子,erzi,son
+二,er,two
+饭店,fandian,restaurant
+飞机,feiji,airplane
+分钟,fenzhong,minute
+高兴,gaoxing,happy
+个,ge,nm
+工作,gongzuo,work
+汉语,hanyu,chinese
+好,hao,good
+号,hao,number
+喝,he,drink
+和,he,and
+很,hen,very
+后面,houmian,behind
+回,hui2,go back
+会,hui4,can or may
+几,ji3,how many
+家,jia1,family
+叫,jia4o,call(ed) (after names)
+今天,ji1n ti1an, today
+九,jiu3,nine
+开,ka1i,open or drive
+看,ka2n,look
+看见,ka4n jian,see
+块,kua4i,RMB yuan
+来,la2i,come
+老师,la3o shi1,teacher
+了,le,used to indicate past tense
+冷,le3ng,cold
+里,li3,inside
+零,li2ng,zero
