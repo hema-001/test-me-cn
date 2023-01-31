@@ -11,7 +11,7 @@ translation spearated by comma.
 
 characters.txt format example:
 大,da,big
-车,che,tea
+车,che,car
 打电话,dadianhua,make a phone call
 
 and so on.
