@@ -27,45 +27,94 @@ Newly added on 1/15/2023 by Ibrahim M. I. Ismail:
 
 Newly added on 1/29/2023 by Ibrahim M. I. Ismail:
 - added english translation of the words
+
+Newly added on 1/29/2023 by Ibrahim M. I. Ismail:
+- added english translation of the words
+
+Newly added on 2/1/2023 by Ibrahim M. I. Ismail:
+- added a feature to show the wrong answers at the end of the execution
+
+Newly added on 2/2/2023 by Ibrahim M. I. Ismail:
+- added a feature to show the time it took to complete the quiz
+
+Newly added on 2/12/2023 by Ibrahim M. I. Ismail:
+- optimized the script, now using dictionries instead of lists
+
+Newly added on 2/26/2023 by Ibrahim M. I. Ismail:
+- added a feature to allow users to limit the number of characters to be tested with
 """
+import csv
 import random
+import time
+import sys
 
-def loadFile(f):
-    ls = []
-    with open(f, "r", encoding="utf8") as file:
-        for line in file:
-            ls.append(line.strip())
-    return ls
+def load_csv_file(filename):
+    """Loads the CSV file and returns a list of characters, pinyin, and English meanings."""
+    with open(filename, newline='', encoding='utf-8') as f:
+        reader = csv.reader(f)
+        return [(row[0], row[1], row[2]) for row in reader]
 
-def getCharFromList(ls):
-    word = ls[0]
-    ls.remove(ls[0])
-    return word
+def quiz(characters, num_chars):
+    """Runs a quiz using the specified list of characters."""
+    score = 0
+    wrong_answers = []
+    total_chars = num_chars
+    current_char = 0
+    # initialize the timer
 
-def separateLines(ls):
-    char = []
-    pinyin = []
-    eng = []
-    for line in ls:
-        char.append(line.split(",")[0].strip())
-        pinyin.append(line.split(",")[1].strip())
-        eng.append(line.split(",")[2].strip())
-    return (char, pinyin, eng)
+    for char, pinyin, eng in characters[:num_chars]:
+        start_time = time.time()
+        input_str = input(f"\nHit enter to get a character, or type 'quit' to stop.\n")
+        if input_str == 'quit':
+            break
+        
+        current_char += 1
+        
+        print(f"What is the pinyin for the following character?")
+        print(f"{char}")
+        print(f"\n{current_char}/{total_chars}")
+        input(f"Hit enter to get the answer.")
+        print(f"\nThe right answer is: {pinyin}, in English: {eng}")
+        answer = input(f"\nDid you get it right?, 'Yes' or 'No':")
+
+        if answer.lower() not in {"yes", "no"}:
+            print("Invalid input. Please enter 'Yes' or 'No'.")
+            continue
+
+        if answer.lower() == 'yes':
+            score += 1
+        else:
+            wrong_answers.append(f"{char},{pinyin},{eng}")
+    
+    end_time = time.time()
+    total_time = end_time - start_time
+
+    final_score = score / num_chars
+    # print the final time in minutes and seconds
+    print(f"\nYou took {int(total_time / 60)} minutes and {float(total_time % 60)} seconds to complete the quiz.")
+    print(f"\nYour final score is {int(final_score * 100)}%")
+    print(f"You got {score} characters correct out of {num_chars}")
+
+    if wrong_answers:
+        print("\nYou got the following wrong:")
+        for wrong_answer in wrong_answers:
+            print(wrong_answer)
 
 if __name__ == '__main__':
-    ls = loadFile("characters.txt")
-    random.shuffle(ls)
-    char, pin_yin, eng = separateLines(ls)
-    user_input = ""
-    score = 0
-    char_count = len(char)
-    while user_input != "quit" and len(char) != 0:
-        user_input = input("\nHit enter to get a character, or enter \'quit\' to stop.\n")
-        print(getCharFromList(char))
-        answer = input("\nDid you get it right?, \'Yes\' or \'No\':")
-        print("\nThe right answer is: {}, in English: {}".format(getCharFromList(pin_yin), getCharFromList(eng)))
-        if answer.lower() == "yes":
-            score += 1
-    final_score = score/char_count
-    print("Your final score is {}%".format(int(final_score*100)))
-    print("You got {} characters correct out of {}".format(score, char_count))
+    # get run arguments
+    args = sys.argv[1:]
+    if len(args) != 1:
+        print("Usage: python char_quiz.py <number of chars>")
+        exit()
+    print(f"Loading {args[0]} characters...")
+    try:
+        characters = load_csv_file("characters.txt")
+    except FileNotFoundError:
+        print("Error: File not found")
+        exit()
+    except csv.Error:
+        print("Error: Invalid CSV file")
+        exit()
+
+    random.shuffle(characters)
+    quiz(characters, int(args[0]))
