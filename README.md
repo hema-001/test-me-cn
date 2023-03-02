@@ -34,6 +34,8 @@ Follow the prompts to complete the quiz.
 At the end of the quiz, the app will show you how many characters you got right out of the total characters in the file, the time it took to complete the quiz, and the characters that you got wrong.
 
 ## Change log
+### 3/2/2023
+- Fixed a bug where the script won't accept answers except 'yes', now you can type yes with multiple combininations of upper and lower case letters
 ### 3/1/2023
 - Added a feature to allow users to specify the HSK level of the characters to be tested with
 ### 2/26/2023

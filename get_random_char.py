@@ -45,6 +45,9 @@ Added on 2/26/2023 by Ibrahim M. I. Ismail:
 
 Added on 3/1/2023 by Ibrahim M. I. Ismail:
 - added a feature to allow users to specify the HSK level of the characters to be tested with
+
+Added on 3/2/2023 by Ibrahim M. I. Ismail:
+- Fixed a bug where the script won't accept answers except 'yes', now you can type yes with multiple combininations of upper and lower case letters
 """
 import csv
 import random
@@ -52,7 +55,7 @@ import time
 import sys
 
 def get_level_words_count(level):
-    """Returns the number of words for each level according to the HSK standards."""
+    """Returns the number of words in the specified level."""
     if level == 0:
         return 0
     elif level == 1:
@@ -89,7 +92,7 @@ def load_csv_file(filename, level):
         if words_level == 0:
             return [(row[0], row[1], row[2]) for row in reader]
         else: # returns words up to the specified level
-            return [(row[0], row[1], row[2]) for i, row in enumerate(reader, start=1) if i <= get_level_words_count(level)]
+            return [(row[0], row[1], row[2]) for i, row in enumerate(reader, start=1) if i <= words_level]
 
 def quiz(characters, num_chars):
     """Runs a quiz using the specified list of characters."""
@@ -118,7 +121,7 @@ def quiz(characters, num_chars):
             print("Invalid input. Please enter 'Y','Yes' or 'No','N' (case insensitive).")
             continue
 
-        if answer.lower() == 'yes':
+        if answer.lower() in {"y", "yes", "Y", "Yes", "YES",'yES','YeS','yEs','yeS','YEs','yES','YeS','yEs','yeS'}:
             score += 1
         else:
             wrong_answers.append(f"{char},{pinyin},{eng}")
