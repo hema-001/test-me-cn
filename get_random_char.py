@@ -48,6 +48,12 @@ Added on 3/1/2023 by Ibrahim M. I. Ismail:
 
 Added on 3/2/2023 by Ibrahim M. I. Ismail:
 - Fixed a bug where the script won't accept answers except 'yes', now you can type yes with multiple combininations of upper and lower case letters
+
+Added on 3/2/2023 by Ibrahim M. I. Ismail:
+- I fixed the answer validation set, I don't know why I was checking for multiple combinations of upper and lower case letters,
+    I should have just checked for lower case letters since I'm forcing the input to lower case, my bad I guess.
+- And while I'm at it, I added a feature to live preview the time elapsed since the start of the quiz. I'm starting to like this script, although it's starting
+    to get a little bit bloaty, I'll try to refactor it later.
 """
 import csv
 import random
@@ -88,11 +94,19 @@ def load_csv_file(filename, level):
             print(f"Error: The file {filename} has only {file_length} words which is not enough for HSK-{level}.")
             exit()
 
+        print(f"Loading {words_level} words from HSK-{level}...")
         # returns all words in file if level is 0
         if words_level == 0:
             return [(row[0], row[1], row[2]) for row in reader]
         else: # returns words up to the specified level
             return [(row[0], row[1], row[2]) for i, row in enumerate(reader, start=1) if i <= words_level]
+
+def show_live_time(start_time):
+    """Returns the time passed since the start time in minutes and seconds. For live preview."""
+    end_time = time.time()
+    total_time = end_time - start_time
+    yield f"{int(total_time / 60)} minutes and {int(total_time % 60)} seconds"
+
 
 def quiz(characters, num_chars):
     """Runs a quiz using the specified list of characters."""
@@ -110,9 +124,10 @@ def quiz(characters, num_chars):
         
         current_char += 1
         
-        print(f"What is the pinyin for the following character?")
+        print(f"What is the the following character?")
         print(f"{char}")
         print(f"\n{current_char}/{total_chars}")
+        print(f"Time elapsed: {next(show_live_time(start_time))}")
         input(f"Hit enter to get the answer.")
         print(f"\nThe right answer is: {pinyin}, in English: {eng}")
         answer = input(f"\nDid you get it right?, 'Y' for yes or 'N' for no:")
@@ -121,7 +136,7 @@ def quiz(characters, num_chars):
             print("Invalid input. Please enter 'Y','Yes' or 'No','N' (case insensitive).")
             continue
 
-        if answer.lower() in {"y", "yes", "Y", "Yes", "YES",'yES','YeS','yEs','yeS','YEs','yES','YeS','yEs','yeS'}:
+        if answer.lower() in {"y", "yes", "ye"}:
             score += 1
         else:
             wrong_answers.append(f"{char},{pinyin},{eng}")
@@ -132,7 +147,7 @@ def quiz(characters, num_chars):
     final_score = score / num_chars
     # print the final time in minutes and seconds
     print(f"\nYou took {int(total_time / 60)} minutes and {int(total_time % 60)} seconds to complete the quiz.")
-    print(f"\nYour final score is {int(final_score * 100)}%")
+    print(f"Your final score is {int(final_score * 100)}%")
     print(f"You got {score} characters correct out of {num_chars}")
 
     if wrong_answers:

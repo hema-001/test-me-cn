@@ -34,6 +34,11 @@ Follow the prompts to complete the quiz.
 At the end of the quiz, the app will show you how many characters you got right out of the total characters in the file, the time it took to complete the quiz, and the characters that you got wrong.
 
 ## Change log
+### 3/4/2023
+- I fixed the answer validation set, I don't know why I was checking for multiple combinations of upper and lower case letters,
+    I should have just checked for lower case letters since I'm forcing the input to lower case, my bad I guess.
+- And while I'm at it, I added a feature to live preview the time elapsed since the start of the quiz. I'm starting to like this script, although it's starting
+    to get a little bit bloaty, I'll try to refactor it later.
 ### 3/2/2023
 - Fixed a bug where the script won't accept answers except 'yes', now you can type yes with multiple combininations of upper and lower case letters
 ### 3/1/2023
